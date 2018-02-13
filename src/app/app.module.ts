@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Store, StoreModule } from '@ngrx/store';
 
-
-import { AppComponent } from './app.component';
+import { AppComponent, Reducer1, Reducer2 } from './app.component';
 
 
 @NgModule({
@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    StoreModule.forRoot({ counter1: Reducer1, counter2 : Reducer2 })
   ],
   providers: [],
   bootstrap: [AppComponent]
