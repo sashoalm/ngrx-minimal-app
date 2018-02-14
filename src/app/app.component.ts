@@ -1,10 +1,26 @@
-import { Component } from '@angular/core';
-import { Store, Action } from '@ngrx/store';
+import { Component, InjectionToken } from '@angular/core';
+import { Store, Action, ActionReducerMap } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-interface AppState {
+export const reducerToken = new InjectionToken<ActionReducerMap<AppState>>('Reducers');
+
+export const reducers = {
+  counter1             : Reducer1,
+  counter2             : Reducer2,
+};
+
+export const reducerProvider = [
+  {provide: reducerToken, useValue: reducers}
+];
+
+export interface AppState {
   counter1 : number;
   counter2 : number;
+}
+
+export const initialAppState : AppState = {
+  counter1: 11,
+  counter2: 22
 }
 
 export function Reducer1(counter : number = 0, action : Action) {

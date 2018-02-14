@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
+import { NgModule, InjectionToken } from '@angular/core';
+import { Store, StoreModule, ActionReducerMap } from '@ngrx/store';
 
-import { AppComponent, Reducer1, Reducer2 } from './app.component';
-
+import { AppComponent, Reducer1, Reducer2, reducerToken, initialAppState, reducerProvider } from './app.component';
 
 @NgModule({
   declarations: [
@@ -11,9 +10,9 @@ import { AppComponent, Reducer1, Reducer2 } from './app.component';
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ counter1: Reducer1, counter2 : Reducer2 })
+    StoreModule.forRoot(reducerToken, { initialState: initialAppState })
   ],
-  providers: [],
+  providers: [reducerProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
