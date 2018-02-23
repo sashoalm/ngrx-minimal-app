@@ -1,12 +1,16 @@
 import { Component, InjectionToken } from '@angular/core';
-import { Store, Action, ActionReducerMap } from '@ngrx/store';
+import { Store, Action, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 export const reducerToken = new InjectionToken<ActionReducerMap<AppState>>('Reducers');
 
+const nestedReducers = {
+  counter1 : Reducer1,
+  counter2 : Reducer2
+};
+
 const reducers = {
-  counter1             : Reducer1,
-  counter2             : Reducer2,
+  nestedCounters       : combineReducers(nestedReducers),
   counter3             : Reducer3
 };
 
@@ -14,15 +18,21 @@ export const reducerProvider = [
   {provide: reducerToken, useValue: reducers}
 ];
 
-interface AppState {
+interface NestedCounters {
   counter1 : number;
   counter2 : number;
+}
+
+interface AppState {
+  nestedCounters : NestedCounters;
   counter3 : number;
 }
 
 export const initialAppState : AppState = {
-  counter1: 11,
-  counter2: 22,
+  nestedCounters : {
+    counter1 : 11,
+    counter2 : 22,
+  },
   counter3: 33,
 }
 
@@ -48,17 +58,14 @@ function Reducer3(counter : number = 0, action : Action) {
 })
 export class AppComponent {
   title = 'app';
-  counter1 : Observable<number>;
-  counter2 : Observable<number>;
+  nestedCounters : Observable<NestedCounters>;
   counter3 : Observable<number>;
 
   constructor(private store : Store<AppState>) {
-    this.counter1 = this.store.select('counter1');
-    this.counter2 = this.store.select('counter2');
+    this.nestedCounters = this.store.select('nestedCounters');
     this.counter3 = this.store.select('counter3');
 
-    this.counter1.subscribe(x => console.log(`Subscribe event for counter1 fired: counter=${x}`));
-    this.counter2.subscribe(x => console.log(`Subscribe event for counter2 fired: counter=${x}`));
+    this.nestedCounters.subscribe(x => console.log(`Subscribe event for counter1 fired: counter1=${x.counter1}, counter2=${x.counter2}`));
     this.counter3.subscribe(x => console.log(`Subscribe event for counter2 fired: counter=${x}`));
   }
 
