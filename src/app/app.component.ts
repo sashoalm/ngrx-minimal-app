@@ -37,7 +37,7 @@ function Reducer2(counter : number = 0, action : Action) {
 }
 
 function Reducer3(counter : number = 0, action : Action) {
-  console.log(`Called Reducer2: counter=${counter}`);
+  console.log(`Called Reducer3: counter=${counter}`);
   return counter + 3;
 }
 
