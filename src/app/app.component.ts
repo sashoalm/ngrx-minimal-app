@@ -7,6 +7,7 @@ export const reducerToken = new InjectionToken<ActionReducerMap<AppState>>('Redu
 export const reducers = {
   counter1             : Reducer1,
   counter2             : Reducer2,
+  counter3             : Reducer3
 };
 
 export const reducerProvider = [
@@ -16,11 +17,13 @@ export const reducerProvider = [
 export interface AppState {
   counter1 : number;
   counter2 : number;
+  counter3 : number;
 }
 
 export const initialAppState : AppState = {
   counter1: 11,
-  counter2: 22
+  counter2: 22,
+  counter3: 33,
 }
 
 export function Reducer1(counter : number = 0, action : Action) {
@@ -33,6 +36,11 @@ export function Reducer2(counter : number = 0, action : Action) {
   return counter + 2;
 }
 
+export function Reducer3(counter : number = 0, action : Action) {
+  console.log(`Called Reducer2: counter=${counter}`);
+  return counter + 3;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -42,13 +50,16 @@ export class AppComponent {
   title = 'app';
   counter1 : Observable<number>;
   counter2 : Observable<number>;
+  counter3 : Observable<number>;
 
   constructor(private store : Store<AppState>) {
     this.counter1 = this.store.select('counter1');
     this.counter2 = this.store.select('counter2');
+    this.counter3 = this.store.select('counter3');
 
     this.counter1.subscribe(x => console.log(`Subscribe event for counter1 fired: counter=${x}`));
     this.counter2.subscribe(x => console.log(`Subscribe event for counter2 fired: counter=${x}`));
+    this.counter3.subscribe(x => console.log(`Subscribe event for counter2 fired: counter=${x}`));
   }
 
   increment() {
