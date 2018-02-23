@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 export const reducerToken = new InjectionToken<ActionReducerMap<AppState>>('Reducers');
 
-export const reducers = {
+const reducers = {
   counter1             : Reducer1,
   counter2             : Reducer2,
   counter3             : Reducer3
@@ -14,7 +14,7 @@ export const reducerProvider = [
   {provide: reducerToken, useValue: reducers}
 ];
 
-export interface AppState {
+interface AppState {
   counter1 : number;
   counter2 : number;
   counter3 : number;
@@ -26,17 +26,17 @@ export const initialAppState : AppState = {
   counter3: 33,
 }
 
-export function Reducer1(counter : number = 0, action : Action) {
+function Reducer1(counter : number = 0, action : Action) {
   console.log(`Called Reducer1: counter=${counter}`);
   return counter + 1;
 }
 
-export function Reducer2(counter : number = 0, action : Action) {
+function Reducer2(counter : number = 0, action : Action) {
   console.log(`Called Reducer2: counter=${counter}`);
   return counter + 2;
 }
 
-export function Reducer3(counter : number = 0, action : Action) {
+function Reducer3(counter : number = 0, action : Action) {
   console.log(`Called Reducer2: counter=${counter}`);
   return counter + 3;
 }

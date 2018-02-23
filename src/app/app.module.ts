@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, InjectionToken } from '@angular/core';
 import { Store, StoreModule, ActionReducerMap } from '@ngrx/store';
 
-import { AppComponent, Reducer1, Reducer2, reducerToken, initialAppState, reducerProvider } from './app.component';
+import { AppComponent, reducerToken, initialAppState, reducerProvider } from './app.component';
 
 @NgModule({
   declarations: [
