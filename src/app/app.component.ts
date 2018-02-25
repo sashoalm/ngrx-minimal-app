@@ -1,18 +1,17 @@
 import { Component, InjectionToken } from '@angular/core';
-import { Store, Action, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { Store, Action, ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../environments/environment';
+import { storeFreeze } from 'ngrx-store-freeze';
 
 export const reducerToken = new InjectionToken<ActionReducerMap<AppState>>('Reducers');
 
-const nestedReducers = {
-  counter1 : Reducer1,
-  counter2 : Reducer2
-};
-
 const reducers = {
-  nestedCounters       : combineReducers(nestedReducers),
+  nestedCounters       : NestedReducer,
   counter3             : Reducer3
 };
+
+export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [storeFreeze]: [];
 
 export const reducerProvider = [
   {provide: reducerToken, useValue: reducers}
@@ -36,14 +35,9 @@ export const initialAppState : AppState = {
   counter3: 33,
 }
 
-function Reducer1(counter : number = 0, action : Action) {
-  console.log(`Called Reducer1: counter=${counter}`);
-  return counter + 1;
-}
-
-function Reducer2(counter : number = 0, action : Action) {
-  console.log(`Called Reducer2: counter=${counter}`);
-  return counter + 2;
+function NestedReducer(counters : NestedCounters = { counter1 : 0, counter2 : 0 }, action : Action) {
+  console.log(`Called Reducer1: counter=${counters}`);
+  return { counter1 : counters.counter1 + 1, counter2 : counters.counter2 + 2 };
 }
 
 function Reducer3(counter : number = 0, action : Action) {

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, InjectionToken } from '@angular/core';
 import { Store, StoreModule, ActionReducerMap } from '@ngrx/store';
 
-import { AppComponent, reducerToken, initialAppState, reducerProvider } from './app.component';
+import { AppComponent, reducerToken, initialAppState, reducerProvider, metaReducers } from './app.component';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { AppComponent, reducerToken, initialAppState, reducerProvider } from './
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot(reducerToken, { initialState: initialAppState })
+    StoreModule.forRoot(reducerToken, { metaReducers, initialState : initialAppState })
   ],
   providers: [reducerProvider],
   bootstrap: [AppComponent]
